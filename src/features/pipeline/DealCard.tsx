@@ -1,3 +1,9 @@
+/**
+ * DealCard — Pipeline deal card with drag-and-drop support.
+ *
+ * Phase 1 Update: Enhanced with new design tokens for better visual hierarchy,
+ * improved hover states, and consistent spacing.
+ */
 import type {
   DraggableAttributes,
   DraggableSyntheticListeners,
@@ -66,16 +72,42 @@ const DealCardView = ({
       data-testid={`deal-card-${deal.id}`}
       data-draggable="true"
       className={cn(
-        "group bg-surface border border-border rounded-sm p-2.5",
-        "flex flex-col gap-1.5 text-sm leading-tight cursor-grab",
-        // Use specific properties to avoid conflicting with dnd-kit transform transitions
-        "transition-[border-color,box-shadow,opacity] duration-150 will-change-transform",
+        // Base styles
+        "group bg-ui-surface",
+        "border border-ui-border-muted rounded-ui-lg",
+        "p-card-padding-sm",
+        "flex flex-col gap-ui-1.5",
+        "text-ui-body-sm leading-snug",
+        "cursor-grab select-none",
+        
+        // Transitions (specific properties to avoid dnd-kit conflicts)
+        "transition-[border-color,box-shadow,opacity,background-color] duration-ui-fast ease-ui-ease",
+        "will-change-transform",
+        
         // Hover state
-        !isOverlay && !isPlaceholder && "hover:border-button-primary/35 hover:shadow-soft",
+        !isOverlay && !isPlaceholder && [
+          "hover:border-ui-accent/30",
+          "hover:shadow-ui-card-hover",
+          "hover:bg-ui-surface",
+        ],
+        
         // Overlay state (dragging)
-        isOverlay && "shadow-[0_10px_24px_rgba(15,23,42,0.2)] scale-[1.02] cursor-grabbing pointer-events-none",
+        isOverlay && [
+          "shadow-ui-lg",
+          "scale-[1.02]",
+          "cursor-grabbing pointer-events-none",
+          "bg-ui-surface",
+          "border-ui-accent/40",
+        ],
+        
         // Placeholder state: keep layout footprint, hide content
-        isPlaceholder && "bg-transparent border-dashed shadow-none cursor-grabbing [&_*]:invisible",
+        isPlaceholder && [
+          "bg-ui-surface-subtle",
+          "border-dashed border-ui-border",
+          "shadow-none cursor-grabbing",
+          "[&_*]:invisible",
+        ],
+        
         className
       )}
       {...attributes}
@@ -83,23 +115,27 @@ const DealCardView = ({
       onClick={onClick}
     >
       {/* Header: Contact + Value */}
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-ui-2">
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-text-primary truncate leading-snug">{deal.contact}</div>
-          {deal.company ? (
-            <div className="text-xs text-text-tertiary truncate mt-0.5 leading-snug">{deal.company}</div>
-          ) : null}
+          <div className="font-medium text-ui-text truncate leading-snug">
+            {deal.contact}
+          </div>
+          {deal.company && (
+            <div className="text-ui-caption text-ui-text-muted truncate mt-0.5 leading-snug">
+              {deal.company}
+            </div>
+          )}
         </div>
-        {/* Value: max-width prevents squeezing contact name on extreme values */}
-        <div className="font-semibold text-text-primary whitespace-nowrap tabular-nums text-xs flex-shrink-0 max-w-[45%] truncate">
+        {/* Value */}
+        <div className="font-semibold text-ui-text whitespace-nowrap tabular-nums text-ui-caption flex-shrink-0 max-w-[45%] truncate">
           {formatRubles(deal.value)}
         </div>
       </div>
 
       {/* Vehicle Link */}
-      {deal.vehicle ? (
+      {deal.vehicle && (
         <a
-          className="text-xs text-accent font-semibold hover:underline truncate block"
+          className="text-ui-caption text-ui-accent font-medium hover:underline truncate block"
           href="#"
           onClick={(event) => {
             event.preventDefault();
@@ -108,21 +144,20 @@ const DealCardView = ({
         >
           {deal.vehicle}
         </a>
-      ) : null}
+      )}
 
       {/* Location Meta */}
-      {deal.location ? (
-        <div className="text-xs text-text-tertiary truncate">{deal.location}</div>
-      ) : null}
+      {deal.location && (
+        <div className="text-ui-caption text-ui-text-tertiary truncate">
+          {deal.location}
+        </div>
+      )}
 
-      {/* Footer: Tags + Statuses
-          - Tags: flex-1 min-w-0 so they shrink first and don't overflow
-          - Statuses: flex-shrink-0 so they stay readable; only rendered when present
-          - items-start so both groups align top when wrapping */}
+      {/* Footer: Tags + Statuses */}
       {(hasTags || hasStatuses) && (
-        <div className="flex items-start justify-between gap-2 mt-1">
+        <div className="flex items-start justify-between gap-ui-2 mt-ui-1">
           {/* Tags (channels) */}
-          <div className="flex flex-wrap gap-1 min-w-0 flex-1">
+          <div className="flex flex-wrap gap-ui-1 min-w-0 flex-1">
             {deal.tags.map((tag) => (
               <Tag
                 key={tag.label}
@@ -136,7 +171,7 @@ const DealCardView = ({
 
           {/* Statuses */}
           {hasStatuses && (
-            <div className="flex flex-wrap gap-1 min-w-0 flex-shrink-0">
+            <div className="flex flex-wrap gap-ui-1 min-w-0 flex-shrink-0">
               {deal.statuses!.map((status) => (
                 <Badge
                   key={status.label}
@@ -163,6 +198,7 @@ export function DealCard({ deal }: DealCardProps) {
     transform: isDragging ? undefined : CSS.Transform.toString(transform),
     transition: isDragging ? undefined : transition,
   };
+  
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (event.defaultPrevented || isDragging) {
       return;

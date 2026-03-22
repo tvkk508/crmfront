@@ -1,3 +1,9 @@
+/**
+ * TaskCard — Task card with drag-and-drop and completion support.
+ *
+ * Phase 1 Update: Enhanced with new design tokens for better visual hierarchy,
+ * improved interactive states, and consistent spacing.
+ */
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { memo, useMemo } from "react";
@@ -45,7 +51,7 @@ const TOOLTIP_ENTITY_LEN = 56;
 
 function TaskTextBlock({ text }: { text: string }) {
   const body = (
-    <span className="min-w-0 flex-1 text-left text-ui-caption font-medium text-text-primary line-clamp-2 [overflow-wrap:anywhere]">
+    <span className="min-w-0 flex-1 text-left text-ui-body-sm font-medium text-ui-text line-clamp-2 [overflow-wrap:anywhere]">
       {text}
     </span>
   );
@@ -82,7 +88,7 @@ function EntityLine({ task }: { task: Task }) {
       <Link
         to={`/deal/${task.entity_id}`}
         onClick={(e) => e.stopPropagation()}
-        className="min-w-0 truncate text-ui-caption text-button-primary hover:underline focus-visible:outline-none focus-visible:underline active:opacity-70"
+        className="min-w-0 truncate text-ui-caption text-ui-accent font-medium hover:underline focus-visible:outline-none focus-visible:underline active:opacity-70"
       >
         {innerContent}
       </Link>
@@ -96,7 +102,7 @@ function EntityLine({ task }: { task: Task }) {
           <Link
             to={`/deal/${task.entity_id}`}
             onClick={(e) => e.stopPropagation()}
-            className="min-w-0 truncate text-ui-caption text-button-primary hover:underline focus-visible:outline-none focus-visible:underline active:opacity-70"
+            className="min-w-0 truncate text-ui-caption text-ui-accent font-medium hover:underline focus-visible:outline-none focus-visible:underline active:opacity-70"
           >
             {innerContent}
           </Link>
@@ -110,7 +116,7 @@ function EntityLine({ task }: { task: Task }) {
 
   if (!isLong) {
     return (
-      <div className="min-w-0 truncate text-ui-caption text-text-tertiary" title={task.entity_title}>
+      <div className="min-w-0 truncate text-ui-caption text-ui-text-tertiary" title={task.entity_title}>
         {innerContent}
       </div>
     );
@@ -119,7 +125,7 @@ function EntityLine({ task }: { task: Task }) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className="min-w-0 cursor-default truncate text-ui-caption text-text-tertiary">
+        <div className="min-w-0 cursor-default truncate text-ui-caption text-ui-text-tertiary">
           {innerContent}
         </div>
       </TooltipTrigger>
@@ -165,50 +171,69 @@ export const TaskCard = memo(function TaskCard({ task, onClick }: TaskCardProps)
         onClick?.();
       }}
       className={cn(
-        "group relative flex min-h-[80px] min-w-0 cursor-pointer flex-col gap-ui-2 rounded-ui-md border border-ui-border bg-ui-surface p-ui-3",
-        "transition-colors duration-ui-fast will-change-transform",
-        "hover:border-ui-accent/35 hover:shadow-ui-elevation",
-        isOverdue && "border-ui-danger/40 bg-ui-danger/[0.06]",
-        task.priority && "border-ui-warn/40 bg-ui-warn/[0.06]"
+        // Base styles
+        "group relative flex min-h-[80px] min-w-0 cursor-pointer flex-col gap-ui-2",
+        "rounded-ui-lg border border-ui-border-muted bg-ui-surface p-card-padding-sm",
+        "transition-all duration-ui-fast ease-ui-ease will-change-transform",
+        
+        // Hover state
+        "hover:border-ui-accent/30 hover:shadow-ui-card-hover",
+        
+        // Overdue state
+        isOverdue && [
+          "border-ui-danger/40",
+          "bg-ui-danger-muted/40",
+        ],
+        
+        // Priority state
+        task.priority && !isOverdue && [
+          "border-ui-warn/40",
+          "bg-ui-warn-muted/40",
+        ]
       )}
     >
-      {task.priority ? (
+      {/* Priority badge */}
+      {task.priority && (
         <div className="absolute right-ui-2 top-ui-2">
           <Badge variant="warn" badgeSize="small" className="max-w-[5rem] truncate">
             Важно
           </Badge>
         </div>
-      ) : null}
+      )}
 
+      {/* Task text */}
       <div className="flex min-w-0 items-start gap-ui-2 pr-10">
         <TaskTextBlock text={task.text} />
       </div>
 
-      {task.task_type_name ? (
+      {/* Task type tag */}
+      {task.task_type_name && (
         <div className="flex min-w-0 items-center gap-ui-1.5">
           <Tag variant="neutral" size="small" className="max-w-full min-w-0 truncate font-medium">
             {task.task_type_name}
           </Tag>
         </div>
-      ) : null}
+      )}
 
+      {/* Entity link */}
       <EntityLine task={task} />
 
+      {/* Footer: Due time + Actions */}
       <div className="mt-auto flex min-w-0 items-center justify-between gap-ui-2">
         <span
           className={cn(
-            "shrink-0 text-[10px] tabular-nums text-text-tertiary",
-            isOverdue && "font-medium text-ui-danger"
+            "shrink-0 text-ui-overline tabular-nums text-ui-text-tertiary",
+            isOverdue && "font-semibold text-ui-danger"
           )}
         >
           {timeUntilDue}
         </span>
         <div className="flex shrink-0 items-center gap-ui-1.5">
-          {task.source === "automation" ? (
+          {task.source === "automation" && (
             <Tag variant="neutral" size="small" title="Автоматизация">
               Авто
             </Tag>
-          ) : null}
+          )}
           <button
             type="button"
             title="Выполнить задачу"
@@ -218,12 +243,22 @@ export const TaskCard = memo(function TaskCard({ task, onClick }: TaskCardProps)
               completeMutation.mutate({ id: task.id });
             }}
             className={cn(
-              "flex h-5 w-5 items-center justify-center rounded-full border border-ui-border",
-              "text-ui-text-muted transition-colors duration-ui-fast",
-              "hover:border-ui-success hover:bg-ui-success/10 hover:text-ui-success",
+              "flex h-5 w-5 items-center justify-center rounded-full",
+              "border border-ui-border-muted",
+              "text-ui-text-muted",
+              "transition-all duration-ui-fast ease-ui-ease",
+              
+              // Hover state
+              "hover:border-ui-success hover:bg-ui-success-muted hover:text-ui-success hover:scale-110",
+              
+              // Focus state
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ui-success/30",
-              "disabled:cursor-not-allowed disabled:opacity-40",
-              completeMutation.isPending && "border-ui-success bg-ui-success/10 text-ui-success"
+              
+              // Disabled state
+              "disabled:cursor-not-allowed disabled:opacity-ui-disabled",
+              
+              // Loading/pending state
+              completeMutation.isPending && "border-ui-success bg-ui-success-muted text-ui-success"
             )}
           >
             <svg
@@ -253,40 +288,42 @@ export function TaskCardOverlay({ task, width }: { task: Task; width?: number })
   return (
     <div
       className={cn(
-        "relative flex min-h-[80px] min-w-0 flex-col gap-ui-2 rounded-ui-md border border-ui-border bg-ui-surface p-ui-3 shadow-ui-overlay",
-        isOverdue && "border-ui-danger/40 bg-ui-danger/[0.06]",
-        task.priority && "border-ui-warn/40 bg-ui-warn/[0.06]"
+        "relative flex min-h-[80px] min-w-0 flex-col gap-ui-2",
+        "rounded-ui-lg border border-ui-border-muted bg-ui-surface p-card-padding-sm",
+        "shadow-ui-lg",
+        isOverdue && "border-ui-danger/40 bg-ui-danger-muted/40",
+        task.priority && !isOverdue && "border-ui-warn/40 bg-ui-warn-muted/40"
       )}
       style={{ width }}
     >
-      {task.priority ? (
+      {task.priority && (
         <div className="absolute right-ui-2 top-ui-2">
           <Badge variant="warn" badgeSize="small" className="max-w-[5rem] truncate">
             Важно
           </Badge>
         </div>
-      ) : null}
-      <span className="min-w-0 pr-10 text-ui-caption font-medium text-text-primary line-clamp-2 [overflow-wrap:anywhere]">
+      )}
+      <span className="min-w-0 pr-10 text-ui-body-sm font-medium text-ui-text line-clamp-2 [overflow-wrap:anywhere]">
         {task.text}
       </span>
-      {task.task_type_name ? (
+      {task.task_type_name && (
         <Tag variant="neutral" size="small" className="w-fit max-w-full truncate font-medium">
           {task.task_type_name}
         </Tag>
-      ) : null}
-      {task.entity_title ? (
-        <div className="min-w-0 truncate text-ui-caption text-text-tertiary">
-          {ENTITY_ICON[task.entity_type] ? (
+      )}
+      {task.entity_title && (
+        <div className="min-w-0 truncate text-ui-caption text-ui-text-tertiary">
+          {ENTITY_ICON[task.entity_type] && (
             <span aria-hidden>{ENTITY_ICON[task.entity_type]}</span>
-          ) : null}
+          )}
           {ENTITY_ICON[task.entity_type] ? " " : null}
           {task.entity_title}
         </div>
-      ) : null}
+      )}
       <span
         className={cn(
-          "text-[10px] tabular-nums text-text-tertiary",
-          isOverdue && "font-medium text-ui-danger"
+          "text-ui-overline tabular-nums text-ui-text-tertiary",
+          isOverdue && "font-semibold text-ui-danger"
         )}
       >
         {timeUntilDue}

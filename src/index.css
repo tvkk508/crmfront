@@ -4,8 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================================================
+   BASE RESETS & DEFAULTS
+   ========================================================================= */
+
 * {
   box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  border-color: rgb(var(--ui-color-border-muted));
 }
 
 html,
@@ -24,6 +34,7 @@ body {
   font-weight: var(--ui-font-body-weight);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -47,11 +58,10 @@ select {
   font: inherit;
 }
 
-/*
-  Focus: use semantic ring tokens. :where() keeps specificity at 0 so any component
-  with `focus-visible:outline-none` / ring utilities wins — avoids double outlines
-  on kit controls (Radix + Tailwind ring).
-*/
+/* =========================================================================
+   FOCUS STATES - Consistent accessible focus rings
+   ========================================================================= */
+
 :where(
   a,
   button,
@@ -66,6 +76,16 @@ select {
   outline-offset: var(--ui-focus-ring-offset);
 }
 
+/* Focus ring with shadow for more subtle appearance */
+.focus-ring-soft:focus-visible {
+  outline: none;
+  box-shadow: var(--ui-shadow-focus), 0 0 0 var(--ui-focus-ring-width) rgb(var(--ui-color-focus-ring) / 0.5);
+}
+
+/* =========================================================================
+   SCROLLBAR STYLING
+   ========================================================================= */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -76,13 +96,276 @@ select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.35);
+  background: rgb(var(--ui-color-text-tertiary) / 0.35);
   border-radius: var(--ui-radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.55);
+  background: rgb(var(--ui-color-text-tertiary) / 0.5);
 }
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ui-color-text-tertiary) / 0.35) transparent;
+}
+
+/* =========================================================================
+   TYPOGRAPHY UTILITY LAYER
+   ========================================================================= */
+
+@layer utilities {
+  /* Tabular numbers for aligned data */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .proportional-nums {
+    font-variant-numeric: proportional-nums;
+  }
+  
+  /* Slashed zero for clarity in IDs/codes */
+  .slashed-zero {
+    font-variant-numeric: slashed-zero;
+  }
+  
+  /* Combined numeric features for data display */
+  .numeric-data {
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
+  
+  /* Text balance for headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Text pretty for body copy */
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* =========================================================================
+   OVERFLOW-SAFE UTILITIES - Prevent content overflow issues
+   ========================================================================= */
+
+@layer utilities {
+  /* Safe text truncation with tooltip hint */
+  .text-safe {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Line clamp variants with safety */
+  .line-clamp-safe-1 {
+    min-width: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  
+  .line-clamp-safe-2 {
+    min-width: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  
+  .line-clamp-safe-3 {
+    min-width: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  
+  /* Break long words/URLs safely */
+  .break-safe {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  
+  /* Prevent shrinking in flex containers */
+  .flex-safe {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  
+  /* Grid item safety */
+  .grid-safe {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  
+  /* Container that clips overflow but allows hover states */
+  .overflow-clip-padding {
+    overflow: clip;
+    overflow-clip-margin: content-box;
+  }
+}
+
+/* =========================================================================
+   INTERACTIVE STATE UTILITIES
+   ========================================================================= */
+
+@layer utilities {
+  /* Hover overlay effect */
+  .hover-overlay {
+    position: relative;
+  }
+  
+  .hover-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ui-overlay-hover);
+    opacity: 0;
+    transition: opacity var(--ui-transition-fast) var(--ui-transition-easing);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  
+  .hover-overlay:hover::before {
+    opacity: 1;
+  }
+  
+  /* Active/pressed state */
+  .active-overlay:active::before {
+    background: var(--ui-overlay-active);
+    opacity: 1;
+  }
+  
+  /* Selected state background */
+  .selected-state {
+    background: rgb(var(--ui-color-surface-selected));
+  }
+  
+  /* Disabled state styling */
+  .disabled-state {
+    opacity: var(--ui-opacity-disabled);
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  
+  /* Loading state styling */
+  .loading-state {
+    opacity: var(--ui-opacity-loading);
+    pointer-events: none;
+    cursor: wait;
+  }
+  
+  /* Interactive cursor states */
+  .cursor-interactive {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+/* =========================================================================
+   COMPONENT BASE STYLES - Visual contracts
+   ========================================================================= */
+
+@layer components {
+  /* Card base */
+  .ui-card {
+    background: rgb(var(--ui-color-surface));
+    border: var(--ui-card-border);
+    border-radius: var(--ui-card-radius);
+    box-shadow: var(--ui-card-shadow);
+  }
+  
+  .ui-card-interactive {
+    transition: box-shadow var(--ui-transition-base) var(--ui-transition-easing),
+                border-color var(--ui-transition-base) var(--ui-transition-easing);
+  }
+  
+  .ui-card-interactive:hover {
+    box-shadow: var(--ui-card-shadow-hover);
+    border-color: rgb(var(--ui-color-border));
+  }
+  
+  /* Widget header */
+  .ui-widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--ui-widget-header-height);
+    padding: var(--ui-widget-header-padding);
+    font-size: var(--ui-widget-header-font-size);
+    font-weight: var(--ui-widget-header-font-weight);
+    color: rgb(var(--ui-color-text));
+    border-bottom: 1px solid rgb(var(--ui-color-border-muted));
+  }
+  
+  /* Section container */
+  .ui-section {
+    background: rgb(var(--ui-color-surface));
+    border-radius: var(--ui-section-radius);
+    padding: var(--ui-section-padding);
+  }
+  
+  /* Surface variants */
+  .ui-surface-muted {
+    background: rgb(var(--ui-color-surface-muted));
+  }
+  
+  .ui-surface-subtle {
+    background: rgb(var(--ui-color-surface-subtle));
+  }
+  
+  /* Divider line */
+  .ui-divider {
+    height: 1px;
+    background: rgb(var(--ui-color-border-muted));
+  }
+  
+  .ui-divider-strong {
+    background: rgb(var(--ui-color-border));
+  }
+}
+
+/* =========================================================================
+   SKELETON & LOADING STATES
+   ========================================================================= */
+
+@layer components {
+  .ui-skeleton {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--ui-color-surface-hover)) 0%,
+      rgb(var(--ui-color-surface-muted)) 50%,
+      rgb(var(--ui-color-surface-hover)) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--ui-radius-sm);
+  }
+  
+  .ui-skeleton-text {
+    height: 1em;
+    border-radius: var(--ui-radius-xs);
+  }
+  
+  .ui-skeleton-avatar {
+    border-radius: var(--ui-radius-full);
+  }
+}
+
+/* =========================================================================
+   ANIMATIONS
+   ========================================================================= */
 
 @keyframes fade-up {
   from {
@@ -95,10 +378,60 @@ select {
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .page-enter {
   animation: fade-up 240ms ease-out;
 }
 
 .stagger-in {
   animation: fade-up 280ms ease-out both;
+}
+
+/* Staggered animation delays */
+.stagger-in-1 { animation-delay: 50ms; }
+.stagger-in-2 { animation-delay: 100ms; }
+.stagger-in-3 { animation-delay: 150ms; }
+.stagger-in-4 { animation-delay: 200ms; }
+.stagger-in-5 { animation-delay: 250ms; }
+
+/* =========================================================================
+   REDUCED MOTION SUPPORT
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

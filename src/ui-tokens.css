@@ -5,94 +5,296 @@
  * - `--ui-*` — semantic (canonical). Use in new code and Tailwind `ui.*` theme keys.
  * - `--color-*`, `--space-*`, `--shadow-*`, etc. — legacy aliases; same computed values.
  * - Platform-develop (`--global-*`, `--primary-button-*`, …) — unchanged values for existing kit.
+ *
+ * Phase 1 Update: Enhanced visual foundation with improved contrast, typography hierarchy,
+ * spacing rhythm, and interactive states for premium CRM experience.
  */
 
 :root {
-  /* -------------------------------------------------------------------------
-     Semantic colors (RGB triplets for `rgb(var(--ui-color-*) / <alpha>)`)
-     ------------------------------------------------------------------------- */
-  --ui-color-background: 244 246 248;
+  /* =========================================================================
+     SEMANTIC COLORS (RGB triplets for `rgb(var(--ui-color-*) / <alpha>)`)
+     Refined for better contrast, hierarchy, and surface separation
+     ========================================================================= */
+  
+  /* Backgrounds & Surfaces */
+  --ui-color-background: 246 248 250;           /* Slightly cooler, better separation */
   --ui-color-surface: 255 255 255;
-  --ui-color-surface-muted: 249 250 252;
-  --ui-color-border: 222 226 232;
-  --ui-color-text: 34 40 47;
-  --ui-color-text-muted: 108 116 124;
-  --ui-color-accent: 47 111 237;
-  --ui-color-success: 27 171 117;
-  --ui-color-warn: 243 158 52;
-  --ui-color-danger: 234 83 82;
-  /* Informational / neutral system messages (distinct from danger & warn) */
-  --ui-color-info: 55 118 179;
-  --ui-color-focus-ring: 47 111 237;
+  --ui-color-surface-muted: 250 251 253;        /* Subtle card backgrounds */
+  --ui-color-surface-subtle: 248 249 251;       /* Even lighter for nested surfaces */
+  --ui-color-surface-hover: 245 247 250;        /* Interactive surface hover */
+  --ui-color-surface-active: 240 243 248;       /* Active/pressed surface */
+  --ui-color-surface-selected: 237 244 254;     /* Selected row/item background */
+  
+  /* Borders - Improved hierarchy */
+  --ui-color-border: 226 230 236;               /* Default borders */
+  --ui-color-border-muted: 235 238 243;         /* Subtle dividers */
+  --ui-color-border-strong: 210 215 224;        /* Emphasized borders */
+  --ui-color-border-focus: 47 111 237;          /* Focus state borders */
+  
+  /* Text - Enhanced contrast & hierarchy */
+  --ui-color-text: 24 32 42;                    /* Primary text - darker for better contrast */
+  --ui-color-text-secondary: 75 85 99;          /* Secondary text */
+  --ui-color-text-muted: 107 114 128;           /* Muted/placeholder text */
+  --ui-color-text-tertiary: 156 163 175;        /* Disabled, hints */
+  --ui-color-text-inverse: 255 255 255;         /* Text on dark backgrounds */
+  
+  /* Accent & Brand */
+  --ui-color-accent: 37 99 235;                 /* Primary blue - slightly more saturated */
+  --ui-color-accent-hover: 29 78 216;           /* Darker on hover */
+  --ui-color-accent-muted: 219 234 254;         /* Light accent background */
+  --ui-color-accent-subtle: 239 246 255;        /* Very light accent tint */
+  
+  /* Status Colors - Refined for clarity */
+  --ui-color-success: 22 163 74;                /* Green - slightly adjusted */
+  --ui-color-success-muted: 220 252 231;        /* Light success background */
+  --ui-color-warn: 245 158 11;                  /* Amber warning */
+  --ui-color-warn-muted: 254 243 199;           /* Light warning background */
+  --ui-color-danger: 220 38 38;                 /* Red - clearer danger */
+  --ui-color-danger-muted: 254 226 226;         /* Light danger background */
+  --ui-color-info: 14 165 233;                  /* Sky blue info */
+  --ui-color-info-muted: 224 242 254;           /* Light info background */
+  
+  /* Focus Ring */
+  --ui-color-focus-ring: 59 130 246;
 
-  /* -------------------------------------------------------------------------
-     Semantic spacing (single scale; legacy tokens alias these)
-     ------------------------------------------------------------------------- */
-  --ui-space-0: 0;
-  --ui-space-1: 4px;
-  --ui-space-1_5: 6px;
-  --ui-space-2: 8px;
-  --ui-space-3: 12px;
-  --ui-space-4: 16px;
-  --ui-space-5: 20px;
-  --ui-space-6: 24px;
-  --ui-space-8: 32px;
-  --ui-space-10: 40px;
-
-  /* -------------------------------------------------------------------------
-     Semantic radii (canonical set + xl for large cards / modals)
-     ------------------------------------------------------------------------- */
-  --ui-radius-sm: 4px;
-  --ui-radius-md: 8px;
-  --ui-radius-lg: 12px;
-  --ui-radius-xl: 16px;
-  --ui-radius-full: 9999px;
-
-  /* -------------------------------------------------------------------------
-     Semantic shadows (two elevations — surface vs overlay / popover)
-     ------------------------------------------------------------------------- */
-  --ui-shadow-elevation: 0 1px 2px rgba(16, 24, 40, 0.08);
-  --ui-shadow-overlay: 0 8px 20px rgba(16, 24, 40, 0.12);
-
-  /* -------------------------------------------------------------------------
-     Semantic typography
-     ------------------------------------------------------------------------- */
+  /* =========================================================================
+     TYPOGRAPHY SYSTEM - Complete hierarchy for CRM content
+     ========================================================================= */
+  
+  /* Display / KPI - Large numeric values & key metrics */
+  --ui-font-display-size: 32px;
+  --ui-font-display-line: 1.1;
+  --ui-font-display-weight: 700;
+  --ui-font-display-tracking: -0.02em;
+  
+  /* KPI / Metrics - Dashboard numbers & statistics */
+  --ui-font-kpi-size: 28px;
+  --ui-font-kpi-line: 1.15;
+  --ui-font-kpi-weight: 600;
+  --ui-font-kpi-tracking: -0.01em;
+  
+  /* KPI Small - Secondary metrics */
+  --ui-font-kpi-sm-size: 22px;
+  --ui-font-kpi-sm-line: 1.2;
+  --ui-font-kpi-sm-weight: 600;
+  --ui-font-kpi-sm-tracking: -0.01em;
+  
+  /* Page Title */
   --ui-font-page-title-size: 20px;
-  --ui-font-page-title-line: 1.25;
+  --ui-font-page-title-line: 1.2;
   --ui-font-page-title-weight: 600;
-
+  --ui-font-page-title-tracking: -0.01em;
+  
+  /* Section Title */
   --ui-font-section-title-size: 16px;
   --ui-font-section-title-line: 1.3;
   --ui-font-section-title-weight: 600;
-
-  --ui-font-body-size: 13px;
-  --ui-font-body-line: 1.4;
+  --ui-font-section-title-tracking: 0;
+  
+  /* Subheading - Card titles, list item titles */
+  --ui-font-subheading-size: 14px;
+  --ui-font-subheading-line: 1.35;
+  --ui-font-subheading-weight: 500;
+  
+  /* Body Large */
+  --ui-font-body-large-size: 15px;
+  --ui-font-body-large-line: 1.5;
+  --ui-font-body-large-weight: 400;
+  
+  /* Body - Default content */
+  --ui-font-body-size: 14px;
+  --ui-font-body-line: 1.5;
   --ui-font-body-weight: 400;
-
-  --ui-font-body-large-size: 14px;
-  --ui-font-body-large-line: 1.4;
-
+  
+  /* Body Small */
+  --ui-font-body-sm-size: 13px;
+  --ui-font-body-sm-line: 1.45;
+  --ui-font-body-sm-weight: 400;
+  
+  /* Caption - Timestamps, meta info */
   --ui-font-caption-size: 12px;
-  --ui-font-caption-line: 1.35;
+  --ui-font-caption-line: 1.4;
   --ui-font-caption-weight: 400;
-
+  
+  /* Overline / Label - Form labels, section markers */
+  --ui-font-overline-size: 11px;
+  --ui-font-overline-line: 1.35;
+  --ui-font-overline-weight: 600;
+  --ui-font-overline-tracking: 0.04em;
+  
+  /* Monospace ID - Deal IDs, codes */
   --ui-font-mono-id-size: 12px;
   --ui-font-mono-id-line: 1.35;
   --ui-font-mono-id-weight: 500;
+  
+  /* Tabular Numbers - Use in tables & aligned figures */
+  --ui-font-tabular: "tabular-nums";
 
-  /* -------------------------------------------------------------------------
-     Semantic interaction states
-     ------------------------------------------------------------------------- */
-  --ui-overlay-hover: rgba(15, 18, 26, 0.06);
-  --ui-overlay-active: rgba(15, 18, 26, 0.1);
+  /* =========================================================================
+     SPACING SYSTEM - Consistent rhythm for all components
+     ========================================================================= */
+  
+  /* Base scale (4px unit) */
+  --ui-space-0: 0;
+  --ui-space-px: 1px;
+  --ui-space-0_5: 2px;
+  --ui-space-1: 4px;
+  --ui-space-1_5: 6px;
+  --ui-space-2: 8px;
+  --ui-space-2_5: 10px;
+  --ui-space-3: 12px;
+  --ui-space-3_5: 14px;
+  --ui-space-4: 16px;
+  --ui-space-5: 20px;
+  --ui-space-6: 24px;
+  --ui-space-7: 28px;
+  --ui-space-8: 32px;
+  --ui-space-9: 36px;
+  --ui-space-10: 40px;
+  --ui-space-12: 48px;
+  --ui-space-14: 56px;
+  --ui-space-16: 64px;
+  
+  /* Semantic spacing tokens for specific use cases */
+  --ui-space-card-padding: var(--ui-space-4);
+  --ui-space-card-padding-sm: var(--ui-space-3);
+  --ui-space-card-gap: var(--ui-space-3);
+  --ui-space-panel-padding: var(--ui-space-5);
+  --ui-space-panel-gap: var(--ui-space-4);
+  --ui-space-form-gap: var(--ui-space-4);
+  --ui-space-form-field-gap: var(--ui-space-1_5);
+  --ui-space-toolbar-padding: var(--ui-space-2);
+  --ui-space-toolbar-gap: var(--ui-space-2);
+  --ui-space-widget-padding: var(--ui-space-4);
+  --ui-space-widget-header-gap: var(--ui-space-3);
+  --ui-space-table-cell-x: var(--ui-space-3);
+  --ui-space-table-cell-y: var(--ui-space-2_5);
+  --ui-space-section-gap: var(--ui-space-6);
+  --ui-space-page-gap: var(--ui-space-6);
+  --ui-space-inline-gap: var(--ui-space-2);
+
+  /* =========================================================================
+     BORDER RADIUS - Consistent corner rounding
+     ========================================================================= */
+  
+  --ui-radius-xs: 2px;
+  --ui-radius-sm: 4px;
+  --ui-radius-md: 6px;
+  --ui-radius-DEFAULT: 8px;
+  --ui-radius-lg: 10px;
+  --ui-radius-xl: 12px;
+  --ui-radius-2xl: 16px;
+  --ui-radius-3xl: 20px;
+  --ui-radius-full: 9999px;
+
+  /* =========================================================================
+     SHADOWS - Modern, softer elevation system
+     ========================================================================= */
+  
+  /* Surface shadows - subtle depth */
+  --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+  --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --ui-shadow-elevation: 0 2px 4px -1px rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.03);
+  --ui-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  
+  /* Overlay shadows - floating elements */
+  --ui-shadow-overlay: 0 8px 24px -4px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.06);
+  --ui-shadow-popover: 0 12px 28px -8px rgb(0 0 0 / 0.12), 0 4px 12px -4px rgb(0 0 0 / 0.06);
+  --ui-shadow-modal: 0 20px 40px -8px rgb(0 0 0 / 0.15), 0 8px 16px -6px rgb(0 0 0 / 0.08);
+  
+  /* Colored shadows for cards */
+  --ui-shadow-card: 0 2px 8px -2px rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.03);
+  --ui-shadow-card-hover: 0 8px 20px -4px rgb(0 0 0 / 0.1), 0 4px 8px -4px rgb(0 0 0 / 0.05);
+  
+  /* Focus shadow (combines with ring) */
+  --ui-shadow-focus: 0 0 0 3px rgb(59 130 246 / 0.15);
+
+  /* =========================================================================
+     INTERACTIVE STATES - Consistent hover, active, focus, disabled
+     ========================================================================= */
+  
+  /* Overlay colors for hover/active states */
+  --ui-overlay-hover: rgb(0 0 0 / 0.04);
+  --ui-overlay-active: rgb(0 0 0 / 0.07);
+  --ui-overlay-selected: rgb(37 99 235 / 0.08);
+  
+  /* Opacity states */
   --ui-opacity-disabled: 0.5;
-  --ui-opacity-loading: 0.65;
+  --ui-opacity-loading: 0.6;
+  --ui-opacity-placeholder: 0.5;
+  
+  /* Focus ring */
   --ui-focus-ring-width: 2px;
   --ui-focus-ring-offset: 2px;
+  --ui-focus-ring-color: rgb(59 130 246 / 0.5);
+  
+  /* Transitions */
+  --ui-transition-fast: 100ms;
+  --ui-transition-base: 150ms;
+  --ui-transition-slow: 200ms;
+  --ui-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* -------------------------------------------------------------------------
-     Legacy color aliases (backward compatible)
-     ------------------------------------------------------------------------- */
+  /* =========================================================================
+     COMPONENT VISUAL CONTRACTS - Design direction for key components
+     ========================================================================= */
+  
+  /* Buttons */
+  --ui-button-height-sm: 28px;
+  --ui-button-height-md: 34px;
+  --ui-button-height-lg: 40px;
+  --ui-button-padding-x-sm: var(--ui-space-2_5);
+  --ui-button-padding-x-md: var(--ui-space-3_5);
+  --ui-button-padding-x-lg: var(--ui-space-4);
+  --ui-button-radius: var(--ui-radius-md);
+  --ui-button-font-size: var(--ui-font-body-sm-size);
+  --ui-button-font-weight: 500;
+  
+  /* Inputs */
+  --ui-input-height-sm: 28px;
+  --ui-input-height-md: 34px;
+  --ui-input-height-lg: 40px;
+  --ui-input-padding-x: var(--ui-space-3);
+  --ui-input-radius: var(--ui-radius-md);
+  --ui-input-border-color: var(--ui-color-border);
+  --ui-input-focus-border: var(--ui-color-accent);
+  
+  /* Cards */
+  --ui-card-radius: var(--ui-radius-lg);
+  --ui-card-padding: var(--ui-space-card-padding);
+  --ui-card-border: 1px solid rgb(var(--ui-color-border-muted));
+  --ui-card-shadow: var(--ui-shadow-card);
+  --ui-card-shadow-hover: var(--ui-shadow-card-hover);
+  
+  /* Tabs */
+  --ui-tab-height: 36px;
+  --ui-tab-padding-x: var(--ui-space-4);
+  --ui-tab-font-size: var(--ui-font-body-sm-size);
+  --ui-tab-font-weight: 500;
+  
+  /* Badges */
+  --ui-badge-height-sm: 18px;
+  --ui-badge-height-md: 22px;
+  --ui-badge-padding-x: var(--ui-space-2);
+  --ui-badge-radius: var(--ui-radius-sm);
+  --ui-badge-font-size: var(--ui-font-caption-size);
+  --ui-badge-font-weight: 500;
+  
+  /* Widget headers */
+  --ui-widget-header-height: 44px;
+  --ui-widget-header-padding: var(--ui-space-3) var(--ui-space-4);
+  --ui-widget-header-font-size: var(--ui-font-subheading-size);
+  --ui-widget-header-font-weight: 500;
+  
+  /* Section containers */
+  --ui-section-radius: var(--ui-radius-xl);
+  --ui-section-padding: var(--ui-space-5);
+  --ui-section-gap: var(--ui-space-4);
+
+  /* =========================================================================
+     LEGACY COLOR ALIASES (backward compatible)
+     ========================================================================= */
+  
   --color-bg: var(--ui-color-background);
   --color-surface: var(--ui-color-surface);
   --color-surface-muted: var(--ui-color-surface-muted);
@@ -105,52 +307,52 @@
   --color-danger: var(--ui-color-danger);
 
   /* Platform-develop colors - Text (Light theme from _lumia-colors.scss) */
-  --global-primary-text-color: 15 18 26; /* #0F121A */
-  --global-secondary-text-color: 90 102 126; /* #5A667E */
-  --global-tertiary-text-color: 123 135 158; /* #7B879E */
-  --global-disabled-text-color: 161 171 191; /* #A1ABBF */
-  --global-accent-text-color: 53 102 226; /* #3566E2 */
+  --global-primary-text-color: 24 32 42;        /* Updated to match new --ui-color-text */
+  --global-secondary-text-color: 75 85 99;      /* Updated to match --ui-color-text-secondary */
+  --global-tertiary-text-color: 107 114 128;    /* Updated to match --ui-color-text-muted */
+  --global-disabled-text-color: 156 163 175;    /* Updated to match --ui-color-text-tertiary */
+  --global-accent-text-color: 37 99 235;        /* Updated to match --ui-color-accent */
 
   /* Platform-develop colors - Buttons (from _colors.scss) */
-  --primary-button-default: 32 93 194; /* #205DC2 */
-  --primary-button-hovered: 53 117 222; /* #3575de */
-  --primary-button-pressed: 28 82 171; /* #1C52AB */
-  --primary-button-focused: 32 93 194; /* #205DC2 */
+  --primary-button-default: 37 99 235;          /* Aligned with accent */
+  --primary-button-hovered: 29 78 216;          /* Aligned with accent-hover */
+  --primary-button-pressed: 30 64 175;
+  --primary-button-focused: 37 99 235;
 
-  --secondary-button-default: 211 225 248; /* #D3E1F8 */
-  --secondary-button-hovered: 189 210 245; /* #BDD2F5 */
-  --secondary-button-pressed: 167 195 241; /* #A7C3F1 */
+  --secondary-button-default: 239 246 255;      /* Aligned with accent-subtle */
+  --secondary-button-hovered: 219 234 254;      /* Aligned with accent-muted */
+  --secondary-button-pressed: 191 219 254;
 
-  --positive-button-default: 5 160 92; /* #05A05C */
-  --positive-button-hovered: 5 173 99; /* #05AD63 */
-  --positive-button-pressed: 1 146 83; /* #019253 */
+  --positive-button-default: 22 163 74;         /* Aligned with success */
+  --positive-button-hovered: 21 128 61;
+  --positive-button-pressed: 22 101 52;
 
-  --negative-button-default: 203 75 66; /* #CB4B42 */
-  --negative-button-hovered: 220 81 72; /* #DC5148 */
-  --negative-button-pressed: 179 65 57; /* #B34139 */
+  --negative-button-default: 220 38 38;         /* Aligned with danger */
+  --negative-button-hovered: 185 28 28;
+  --negative-button-pressed: 153 27 27;
 
   /* Platform-develop colors - States */
-  --theme-state-positive-color: 5 160 92; /* #05A05C */
-  --theme-state-positive-hover: 4 135 78; /* #04874E */
-  --theme-state-positive-background: 5 160 92; /* rgba(5, 160, 92, 0.1) - используется в коде */
-  --theme-state-positive-border: 5 160 92; /* rgba(5, 160, 92, 0.15) - используется в коде */
+  --theme-state-positive-color: 22 163 74;
+  --theme-state-positive-hover: 21 128 61;
+  --theme-state-positive-background: 22 163 74;
+  --theme-state-positive-border: 22 163 74;
 
-  --theme-state-negative-color: 203 75 66; /* #CB4B42 */
-  --theme-state-negative-hover: 178 66 58; /* #B2423A */
-  --theme-state-negative-background: 203 75 66; /* rgba(203, 75, 66, 0.15) - используется в коде */
-  --theme-state-negative-border: 203 75 66; /* rgba(203, 75, 66, 0.15) - используется в коде */
+  --theme-state-negative-color: 220 38 38;
+  --theme-state-negative-hover: 185 28 28;
+  --theme-state-negative-background: 220 38 38;
+  --theme-state-negative-border: 220 38 38;
 
   /* Border Radius — legacy & platform (aliases to semantic where applicable) */
-  --radius-8: var(--ui-radius-md);
-  --radius-10: 10px;
-  --radius-12: var(--ui-radius-lg);
-  --min-border-radius: 0.125rem; /* 2px */
+  --radius-8: var(--ui-radius-DEFAULT);
+  --radius-10: var(--ui-radius-lg);
+  --radius-12: var(--ui-radius-xl);
+  --min-border-radius: var(--ui-radius-xs);
   --extra-small-border-radius: var(--ui-radius-sm);
-  --small-border-radius: 0.375rem; /* 6px — between sm & md; kept for exact kit match */
-  --medium-border-radius: var(--ui-radius-md);
-  --large-border-radius: var(--ui-radius-xl);
-  --small-focus-border-radius: var(--ui-radius-md);
-  --medium-focus-border-radius: 0.625rem; /* 10px */
+  --small-border-radius: var(--ui-radius-md);
+  --medium-border-radius: var(--ui-radius-DEFAULT);
+  --large-border-radius: var(--ui-radius-2xl);
+  --small-focus-border-radius: var(--ui-radius-DEFAULT);
+  --medium-focus-border-radius: var(--ui-radius-lg);
 
   /* Shadows — legacy & platform */
   --shadow-1: var(--ui-shadow-elevation);
@@ -171,77 +373,99 @@
   --space-16: var(--ui-space-4);
 
   /* Platform-develop spacing (aliases to semantic scale for consistency) */
-  --spacing-0_25: 0.125rem; /* 2px */
+  --spacing-0_25: var(--ui-space-0_5);
   --spacing-0_5: var(--ui-space-1);
-  --spacing-0_75: 0.375rem; /* 6px */
+  --spacing-0_75: var(--ui-space-1_5);
   --spacing-1: var(--ui-space-2);
-  --spacing-1_25: 0.625rem; /* 10px */
+  --spacing-1_25: var(--ui-space-2_5);
   --spacing-1_5: var(--ui-space-3);
-  --spacing-1_75: 0.875rem; /* 14px */
+  --spacing-1_75: var(--ui-space-3_5);
   --spacing-2: var(--ui-space-4);
-  --spacing-2_25: 1.125rem; /* 18px */
+  --spacing-2_25: 18px;
   --spacing-2_5: var(--ui-space-5);
   --spacing-3: var(--ui-space-6);
   --spacing-4: var(--ui-space-8);
 
   /* UI Elements Size (from _vars.scss) */
-  --global-min-size: 1rem; /* 16px */
-  --global-extra-small-size: 1.5rem; /* 24px */
-  --global-small-size: 2rem; /* 32px */
-  --global-medium-size: 2.5rem; /* 40px */
-  --global-large-size: 3rem; /* 48px */
-  --global-extra-large-size: 3.5rem; /* 56px */
-  --global-max-size: 4rem; /* 64px */
+  --global-min-size: 1rem;
+  --global-extra-small-size: 1.5rem;
+  --global-small-size: 2rem;
+  --global-medium-size: 2.5rem;
+  --global-large-size: 3rem;
+  --global-extra-large-size: 3.5rem;
+  --global-max-size: 4rem;
 
   /* Typography — legacy aliases */
+  --font-size-11: var(--ui-font-overline-size);
   --font-size-12: var(--ui-font-caption-size);
-  --font-size-13: var(--ui-font-body-size);
-  --font-size-14: var(--ui-font-body-large-size);
+  --font-size-13: var(--ui-font-body-sm-size);
+  --font-size-14: var(--ui-font-body-size);
+  --font-size-15: var(--ui-font-body-large-size);
   --font-size-16: var(--ui-font-section-title-size);
 
   --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
   --line-height-base: var(--ui-font-body-line);
+  --line-height-relaxed: 1.6;
 
   /* Layout */
-  --row-height: 30px;
-  --control-height: 30px;
-  --panel-gap: var(--ui-space-3);
+  --row-height: 32px;
+  --control-height: 34px;
+  --panel-gap: var(--ui-space-4);
 
   --amo-sidebar-width: 68px;
-  --amo-sidebar-bg: #243541;
-  --amo-sidebar-text: #d6e1ea;
-  --amo-sidebar-muted: rgba(214, 225, 234, 0.7);
-  --amo-sidebar-active: rgba(255, 255, 255, 0.12);
-  --amo-sidebar-badge: #ff4d4f;
+  --amo-sidebar-bg: #1e293b;
+  --amo-sidebar-text: #e2e8f0;
+  --amo-sidebar-muted: rgba(226, 232, 240, 0.6);
+  --amo-sidebar-active: rgba(255, 255, 255, 0.1);
+  --amo-sidebar-badge: #ef4444;
 
-  --amo-radius-xs: 3px;
-  --amo-radius-sm: 4px;
-  --amo-radius-md: 6px;
+  --amo-radius-xs: var(--ui-radius-xs);
+  --amo-radius-sm: var(--ui-radius-sm);
+  --amo-radius-md: var(--ui-radius-md);
 
-  --amo-shadow-soft: 0 1px 3px rgba(15, 23, 42, 0.1);
+  --amo-shadow-soft: var(--ui-shadow-sm);
 
-  --amo-stage-purple: #b172ff;
-  --amo-stage-blue: #6b8bff;
-  --amo-stage-green: #33c08c;
-  --amo-stage-orange: #f2a64e;
-  --amo-stage-red: #ff6b6b;
-  --amo-stage-teal: #35c5c1;
-  --amo-stage-yellow: #f2c94c;
-  --amo-stage-pink: #f19ac7;
-  --amo-stage-gray: #9aa4b2;
+  --amo-stage-purple: #a78bfa;
+  --amo-stage-blue: #60a5fa;
+  --amo-stage-green: #34d399;
+  --amo-stage-orange: #fb923c;
+  --amo-stage-red: #f87171;
+  --amo-stage-teal: #2dd4bf;
+  --amo-stage-yellow: #fbbf24;
+  --amo-stage-pink: #f472b6;
+  --amo-stage-gray: #94a3b8;
 }
+
+/* =========================================================================
+   COMPACT DENSITY MODE
+   ========================================================================= */
 
 [data-density="compact"] {
   --ui-space-1_5: 4px;
   --ui-space-2: 6px;
+  --ui-space-2_5: 8px;
   --ui-space-3: 10px;
   --ui-space-4: 12px;
+  --ui-space-5: 16px;
+  --ui-space-6: 20px;
 
-  /* Match previous compact typography: only body steps tighten */
-  --ui-font-body-size: 12px;
-  --ui-font-body-large-size: 13px;
+  --ui-font-body-size: 13px;
+  --ui-font-body-large-size: 14px;
+  --ui-font-body-sm-size: 12px;
+  --ui-font-caption-size: 11px;
+  --ui-font-kpi-size: 24px;
+  --ui-font-kpi-sm-size: 18px;
+
+  --ui-button-height-sm: 24px;
+  --ui-button-height-md: 30px;
+  --ui-button-height-lg: 36px;
+  
+  --ui-input-height-sm: 24px;
+  --ui-input-height-md: 30px;
+  --ui-input-height-lg: 36px;
 
   --row-height: 28px;
-  --control-height: 28px;
+  --control-height: 30px;
   --panel-gap: 10px;
 }

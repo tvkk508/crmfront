@@ -1,5 +1,6 @@
 /* ===========================================
    Shell & Sidebar Styles (Global Layout)
+   Phase 1 Update: Refined with new design tokens
    =========================================== */
 .amo-shell {
   display: flex;
@@ -7,7 +8,6 @@
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  /* Semantic alias: same as `--color-bg` / `--ui-color-background` */
   background: rgb(var(--ui-color-background));
   color: rgb(var(--ui-color-text));
 }
@@ -23,32 +23,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 12px 8px;
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-3) var(--ui-space-2);
   z-index: 20;
+  /* Subtle inner shadow for depth */
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
 .amo-sidebar__brand {
-  height: 36px;
-  width: 36px;
-  border-radius: 10px;
-  background: rgb(var(--primary-button-default));
+  height: 40px;
+  width: 40px;
+  border-radius: var(--ui-radius-lg);
+  background: linear-gradient(135deg, rgb(var(--ui-color-accent)), rgb(var(--ui-color-accent-hover)));
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: 700;
+  font-size: 13px;
   letter-spacing: 0.02em;
-  box-shadow: var(--shadow-1);
+  box-shadow: var(--ui-shadow-sm);
+  transition: transform var(--ui-transition-fast) var(--ui-transition-easing),
+              box-shadow var(--ui-transition-fast) var(--ui-transition-easing);
+}
+
+.amo-sidebar__brand:hover {
+  transform: scale(1.05);
+  box-shadow: var(--ui-shadow-md);
 }
 
 .amo-sidebar__nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--ui-space-1);
   width: 100%;
   align-items: center;
+  margin-top: var(--ui-space-2);
 }
 
 .amo-sidebar__item {
@@ -57,14 +67,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 6px 4px;
-  border-radius: var(--medium-border-radius);
+  gap: var(--ui-space-1);
+  padding: var(--ui-space-2) var(--ui-space-1);
+  border-radius: var(--ui-radius-md);
   color: var(--amo-sidebar-muted);
   font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  transition: background 150ms ease, color 150ms ease;
+  letter-spacing: 0.05em;
+  transition: background var(--ui-transition-fast) var(--ui-transition-easing),
+              color var(--ui-transition-fast) var(--ui-transition-easing),
+              transform var(--ui-transition-fast) var(--ui-transition-easing);
+  cursor: pointer;
+  user-select: none;
 }
 
 .amo-sidebar__item:hover {
@@ -72,9 +87,25 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
+.amo-sidebar__item:active {
+  transform: scale(0.96);
+}
+
 .amo-sidebar__item.is-active {
   color: #fff;
   background: var(--amo-sidebar-active);
+}
+
+.amo-sidebar__item.is-active::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 0 var(--ui-radius-full) var(--ui-radius-full) 0;
+  background: rgb(var(--ui-color-accent));
 }
 
 .amo-sidebar__icon {
@@ -89,11 +120,11 @@
 .amo-sidebar__badge {
   position: absolute;
   top: 4px;
-  right: 12px;
+  right: 10px;
   min-width: 16px;
   height: 16px;
   padding: 0 4px;
-  border-radius: 999px;
+  border-radius: var(--ui-radius-full);
   background: var(--amo-sidebar-badge);
   color: #fff;
   font-size: 9px;
@@ -102,6 +133,21 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--amo-sidebar-bg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Animated badge pulse for important notifications */
+.amo-sidebar__badge--pulse {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .amo-main {
@@ -130,7 +176,7 @@
    =========================================== */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgba(100, 116, 139, 0.4) transparent;
+  scrollbar-color: rgb(var(--ui-color-text-tertiary) / 0.4) transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
@@ -139,12 +185,26 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.35);
-  border-radius: 999px;
+  background: rgb(var(--ui-color-text-tertiary) / 0.35);
+  border-radius: var(--ui-radius-full);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--ui-color-text-tertiary) / 0.5);
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }
 
 /* ===========================================
@@ -188,9 +248,67 @@
 @media (max-width: 640px) {
   .amo-sidebar {
     width: 60px;
+    padding: var(--ui-space-2) var(--ui-space-1);
+  }
+
+  .amo-sidebar__brand {
+    height: 36px;
+    width: 36px;
+    font-size: 11px;
+  }
+
+  .amo-sidebar__item.is-active::before {
+    left: -4px;
+    height: 16px;
   }
 
   .amo-main {
     margin-left: 60px;
+  }
+}
+
+/* ===========================================
+   Tooltip for Sidebar Items (Optional)
+   =========================================== */
+.amo-sidebar__item[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: var(--ui-space-1) var(--ui-space-2);
+  background: rgb(var(--ui-color-text));
+  color: rgb(var(--ui-color-text-inverse));
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  border-radius: var(--ui-radius-md);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--ui-transition-fast) var(--ui-transition-easing),
+              visibility var(--ui-transition-fast) var(--ui-transition-easing);
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: var(--ui-shadow-md);
+}
+
+.amo-sidebar__item[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===========================================
+   Reduced Motion Support
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .amo-sidebar__brand:hover,
+  .amo-sidebar__item:active,
+  .stagger-in,
+  .page-enter,
+  .amo-sidebar__badge--pulse {
+    animation: none;
+    transform: none;
   }
 }

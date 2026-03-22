@@ -4,19 +4,37 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Semantic (canonical) — prefer `ui-*` in new code */
+        /* =====================================================================
+           SEMANTIC COLORS (canonical) — prefer `ui-*` in new code
+           ===================================================================== */
         ui: {
           background: "rgb(var(--ui-color-background) / <alpha-value>)",
           surface: "rgb(var(--ui-color-surface) / <alpha-value>)",
           "surface-muted": "rgb(var(--ui-color-surface-muted) / <alpha-value>)",
+          "surface-subtle": "rgb(var(--ui-color-surface-subtle) / <alpha-value>)",
+          "surface-hover": "rgb(var(--ui-color-surface-hover) / <alpha-value>)",
+          "surface-active": "rgb(var(--ui-color-surface-active) / <alpha-value>)",
+          "surface-selected": "rgb(var(--ui-color-surface-selected) / <alpha-value>)",
           border: "rgb(var(--ui-color-border) / <alpha-value>)",
+          "border-muted": "rgb(var(--ui-color-border-muted) / <alpha-value>)",
+          "border-strong": "rgb(var(--ui-color-border-strong) / <alpha-value>)",
           text: "rgb(var(--ui-color-text) / <alpha-value>)",
+          "text-secondary": "rgb(var(--ui-color-text-secondary) / <alpha-value>)",
           "text-muted": "rgb(var(--ui-color-text-muted) / <alpha-value>)",
+          "text-tertiary": "rgb(var(--ui-color-text-tertiary) / <alpha-value>)",
+          "text-inverse": "rgb(var(--ui-color-text-inverse) / <alpha-value>)",
           accent: "rgb(var(--ui-color-accent) / <alpha-value>)",
+          "accent-hover": "rgb(var(--ui-color-accent-hover) / <alpha-value>)",
+          "accent-muted": "rgb(var(--ui-color-accent-muted) / <alpha-value>)",
+          "accent-subtle": "rgb(var(--ui-color-accent-subtle) / <alpha-value>)",
           success: "rgb(var(--ui-color-success) / <alpha-value>)",
+          "success-muted": "rgb(var(--ui-color-success-muted) / <alpha-value>)",
           warn: "rgb(var(--ui-color-warn) / <alpha-value>)",
+          "warn-muted": "rgb(var(--ui-color-warn-muted) / <alpha-value>)",
           danger: "rgb(var(--ui-color-danger) / <alpha-value>)",
+          "danger-muted": "rgb(var(--ui-color-danger-muted) / <alpha-value>)",
           info: "rgb(var(--ui-color-info) / <alpha-value>)",
+          "info-muted": "rgb(var(--ui-color-info-muted) / <alpha-value>)",
           "focus-ring": "rgb(var(--ui-color-focus-ring) / <alpha-value>)",
         },
         /* Legacy colors (backward compatibility; same values as semantic) */
@@ -51,24 +69,61 @@ export default {
         "state-negative": "rgb(var(--theme-state-negative-color) / <alpha-value>)",
       },
       spacing: {
+        /* Semantic spacing scale */
         "ui-0": "var(--ui-space-0)",
+        "ui-px": "var(--ui-space-px)",
+        "ui-0.5": "var(--ui-space-0_5)",
         "ui-1": "var(--ui-space-1)",
         "ui-1.5": "var(--ui-space-1_5)",
         "ui-2": "var(--ui-space-2)",
+        "ui-2.5": "var(--ui-space-2_5)",
         "ui-3": "var(--ui-space-3)",
+        "ui-3.5": "var(--ui-space-3_5)",
         "ui-4": "var(--ui-space-4)",
         "ui-5": "var(--ui-space-5)",
         "ui-6": "var(--ui-space-6)",
+        "ui-7": "var(--ui-space-7)",
         "ui-8": "var(--ui-space-8)",
+        "ui-9": "var(--ui-space-9)",
         "ui-10": "var(--ui-space-10)",
+        "ui-12": "var(--ui-space-12)",
+        "ui-14": "var(--ui-space-14)",
+        "ui-16": "var(--ui-space-16)",
+        /* Component-specific spacing */
+        "card-padding": "var(--ui-space-card-padding)",
+        "card-padding-sm": "var(--ui-space-card-padding-sm)",
+        "card-gap": "var(--ui-space-card-gap)",
+        "panel-padding": "var(--ui-space-panel-padding)",
+        "panel-gap": "var(--ui-space-panel-gap)",
+        "form-gap": "var(--ui-space-form-gap)",
+        "form-field-gap": "var(--ui-space-form-field-gap)",
+        "toolbar-padding": "var(--ui-space-toolbar-padding)",
+        "toolbar-gap": "var(--ui-space-toolbar-gap)",
+        "widget-padding": "var(--ui-space-widget-padding)",
+        "widget-header-gap": "var(--ui-space-widget-header-gap)",
+        "table-cell-x": "var(--ui-space-table-cell-x)",
+        "table-cell-y": "var(--ui-space-table-cell-y)",
+        "section-gap": "var(--ui-space-section-gap)",
+        "page-gap": "var(--ui-space-page-gap)",
+        "inline-gap": "var(--ui-space-inline-gap)",
       },
       borderRadius: {
         /* Semantic radii */
+        "ui-xs": "var(--ui-radius-xs)",
         "ui-sm": "var(--ui-radius-sm)",
         "ui-md": "var(--ui-radius-md)",
+        "ui-DEFAULT": "var(--ui-radius-DEFAULT)",
         "ui-lg": "var(--ui-radius-lg)",
         "ui-xl": "var(--ui-radius-xl)",
+        "ui-2xl": "var(--ui-radius-2xl)",
+        "ui-3xl": "var(--ui-radius-3xl)",
         "ui-full": "var(--ui-radius-full)",
+        /* Component radii */
+        "ui-button": "var(--ui-button-radius)",
+        "ui-input": "var(--ui-input-radius)",
+        "ui-card": "var(--ui-card-radius)",
+        "ui-badge": "var(--ui-badge-radius)",
+        "ui-section": "var(--ui-section-radius)",
         /* Legacy numeric keys */
         "8": "var(--radius-8)",
         "10": "var(--radius-10)",
@@ -81,9 +136,18 @@ export default {
         lg: "var(--large-border-radius)",
       },
       boxShadow: {
-        /* Canonical pair */
+        /* Modern shadow scale */
+        "ui-xs": "var(--ui-shadow-xs)",
+        "ui-sm": "var(--ui-shadow-sm)",
         "ui-elevation": "var(--ui-shadow-elevation)",
+        "ui-md": "var(--ui-shadow-md)",
+        "ui-lg": "var(--ui-shadow-lg)",
         "ui-overlay": "var(--ui-shadow-overlay)",
+        "ui-popover": "var(--ui-shadow-popover)",
+        "ui-modal": "var(--ui-shadow-modal)",
+        "ui-card": "var(--ui-shadow-card)",
+        "ui-card-hover": "var(--ui-shadow-card-hover)",
+        "ui-focus": "var(--ui-shadow-focus)",
         /* Legacy aliases */
         soft: "var(--shadow-1)",
         deep: "var(--shadow-2)",
@@ -94,12 +158,37 @@ export default {
           "0 var(--global-modal-shadow-x) var(--global-modal-shadow-y) var(--global-modal-shadow-spread) rgba(0, 0, 0, 0.15), 0 0 0 var(--global-modal-shadow-blur) rgba(0, 0, 0, 0.1)",
       },
       fontSize: {
-        /* Semantic type scale */
+        /* Complete semantic type scale */
+        "ui-display": [
+          "var(--ui-font-display-size)",
+          {
+            lineHeight: "var(--ui-font-display-line)",
+            fontWeight: "var(--ui-font-display-weight)",
+            letterSpacing: "var(--ui-font-display-tracking)",
+          },
+        ],
+        "ui-kpi": [
+          "var(--ui-font-kpi-size)",
+          {
+            lineHeight: "var(--ui-font-kpi-line)",
+            fontWeight: "var(--ui-font-kpi-weight)",
+            letterSpacing: "var(--ui-font-kpi-tracking)",
+          },
+        ],
+        "ui-kpi-sm": [
+          "var(--ui-font-kpi-sm-size)",
+          {
+            lineHeight: "var(--ui-font-kpi-sm-line)",
+            fontWeight: "var(--ui-font-kpi-sm-weight)",
+            letterSpacing: "var(--ui-font-kpi-sm-tracking)",
+          },
+        ],
         "ui-page-title": [
           "var(--ui-font-page-title-size)",
           {
             lineHeight: "var(--ui-font-page-title-line)",
             fontWeight: "var(--ui-font-page-title-weight)",
+            letterSpacing: "var(--ui-font-page-title-tracking)",
           },
         ],
         "ui-section-title": [
@@ -107,21 +196,50 @@ export default {
           {
             lineHeight: "var(--ui-font-section-title-line)",
             fontWeight: "var(--ui-font-section-title-weight)",
+            letterSpacing: "var(--ui-font-section-title-tracking)",
+          },
+        ],
+        "ui-subheading": [
+          "var(--ui-font-subheading-size)",
+          {
+            lineHeight: "var(--ui-font-subheading-line)",
+            fontWeight: "var(--ui-font-subheading-weight)",
+          },
+        ],
+        "ui-body-lg": [
+          "var(--ui-font-body-large-size)",
+          {
+            lineHeight: "var(--ui-font-body-large-line)",
+            fontWeight: "var(--ui-font-body-large-weight)",
           },
         ],
         "ui-body": [
           "var(--ui-font-body-size)",
-          { lineHeight: "var(--ui-font-body-line)", fontWeight: "var(--ui-font-body-weight)" },
+          {
+            lineHeight: "var(--ui-font-body-line)",
+            fontWeight: "var(--ui-font-body-weight)",
+          },
         ],
-        "ui-body-lg": [
-          "var(--ui-font-body-large-size)",
-          { lineHeight: "var(--ui-font-body-large-line)" },
+        "ui-body-sm": [
+          "var(--ui-font-body-sm-size)",
+          {
+            lineHeight: "var(--ui-font-body-sm-line)",
+            fontWeight: "var(--ui-font-body-sm-weight)",
+          },
         ],
         "ui-caption": [
           "var(--ui-font-caption-size)",
           {
             lineHeight: "var(--ui-font-caption-line)",
             fontWeight: "var(--ui-font-caption-weight)",
+          },
+        ],
+        "ui-overline": [
+          "var(--ui-font-overline-size)",
+          {
+            lineHeight: "var(--ui-font-overline-line)",
+            fontWeight: "var(--ui-font-overline-weight)",
+            letterSpacing: "var(--ui-font-overline-tracking)",
           },
         ],
         "ui-mono-id": [
@@ -132,27 +250,49 @@ export default {
           },
         ],
         /* Legacy numeric keys */
+        "11": "var(--font-size-11)",
         "12": "var(--font-size-12)",
         "13": "var(--font-size-13)",
         "14": "var(--font-size-14)",
+        "15": "var(--font-size-15)",
         "16": "var(--font-size-16)",
       },
       lineHeight: {
+        "ui-display": "var(--ui-font-display-line)",
+        "ui-kpi": "var(--ui-font-kpi-line)",
+        "ui-kpi-sm": "var(--ui-font-kpi-sm-line)",
         "ui-page-title": "var(--ui-font-page-title-line)",
         "ui-section-title": "var(--ui-font-section-title-line)",
-        "ui-body": "var(--ui-font-body-line)",
+        "ui-subheading": "var(--ui-font-subheading-line)",
         "ui-body-lg": "var(--ui-font-body-large-line)",
+        "ui-body": "var(--ui-font-body-line)",
+        "ui-body-sm": "var(--ui-font-body-sm-line)",
         "ui-caption": "var(--ui-font-caption-line)",
+        "ui-overline": "var(--ui-font-overline-line)",
         "ui-mono-id": "var(--ui-font-mono-id-line)",
         tight: "var(--line-height-tight)",
+        snug: "var(--line-height-snug)",
         base: "var(--line-height-base)",
+        relaxed: "var(--line-height-relaxed)",
       },
       fontWeight: {
+        "ui-display": "var(--ui-font-display-weight)",
+        "ui-kpi": "var(--ui-font-kpi-weight)",
+        "ui-kpi-sm": "var(--ui-font-kpi-sm-weight)",
         "ui-page-title": "var(--ui-font-page-title-weight)",
         "ui-section-title": "var(--ui-font-section-title-weight)",
+        "ui-subheading": "var(--ui-font-subheading-weight)",
         "ui-body": "var(--ui-font-body-weight)",
         "ui-caption": "var(--ui-font-caption-weight)",
+        "ui-overline": "var(--ui-font-overline-weight)",
         "ui-mono-id": "var(--ui-font-mono-id-weight)",
+        "ui-button": "var(--ui-button-font-weight)",
+      },
+      letterSpacing: {
+        "ui-display": "var(--ui-font-display-tracking)",
+        "ui-kpi": "var(--ui-font-kpi-tracking)",
+        "ui-page-title": "var(--ui-font-page-title-tracking)",
+        "ui-overline": "var(--ui-font-overline-tracking)",
       },
       maxWidth: {
         "ui-readable": "65ch",
@@ -162,6 +302,7 @@ export default {
       },
       minWidth: {
         "ui-touch": "44px",
+        "0": "0px",
       },
       fontFamily: {
         "ui-mono": [
@@ -171,22 +312,65 @@ export default {
           "SFMono-Regular",
           "monospace",
         ],
+        "ui-sans": [
+          '"PT Root UI"',
+          '"IBM Plex Sans"',
+          '"Segoe UI"',
+          "sans-serif",
+        ],
       },
       opacity: {
         "ui-disabled": "var(--ui-opacity-disabled)",
         "ui-loading": "var(--ui-opacity-loading)",
+        "ui-placeholder": "var(--ui-opacity-placeholder)",
       },
       transitionDuration: {
-        "ui-fast": "150ms",
-        "ui-base": "200ms",
+        "ui-fast": "var(--ui-transition-fast)",
+        "ui-base": "var(--ui-transition-base)",
+        "ui-slow": "var(--ui-transition-slow)",
+      },
+      transitionTimingFunction: {
+        "ui-ease": "var(--ui-transition-easing)",
+      },
+      height: {
+        "ui-button-sm": "var(--ui-button-height-sm)",
+        "ui-button-md": "var(--ui-button-height-md)",
+        "ui-button-lg": "var(--ui-button-height-lg)",
+        "ui-input-sm": "var(--ui-input-height-sm)",
+        "ui-input-md": "var(--ui-input-height-md)",
+        "ui-input-lg": "var(--ui-input-height-lg)",
+        "ui-tab": "var(--ui-tab-height)",
+        "ui-badge-sm": "var(--ui-badge-height-sm)",
+        "ui-badge-md": "var(--ui-badge-height-md)",
+        "ui-widget-header": "var(--ui-widget-header-height)",
       },
       animation: {
         shimmer: "shimmer 1.5s infinite",
+        "fade-in": "fade-in 200ms ease-out",
+        "fade-up": "fade-up 240ms ease-out",
+        "scale-in": "scale-in 150ms ease-out",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
         shimmer: {
           "0%": { backgroundPosition: "200% 0" },
           "100%": { backgroundPosition: "-200% 0" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(6px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          from: { opacity: "0", transform: "scale(0.95)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
         },
       },
     },

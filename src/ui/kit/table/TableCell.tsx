@@ -1,3 +1,10 @@
+/**
+ * TableCell — consistent cell styling with overflow protection.
+ *
+ * Phase 1 Update: Enhanced with new spacing tokens and typography.
+ *
+ * Licensed under EPL-2.0 (Eclipse Public License 2.0)
+ */
 import type { HTMLAttributes } from "react";
 import { forwardRef } from "react";
 import { cn } from "../../cn";
@@ -15,17 +22,25 @@ export type TableCellProps = HTMLAttributes<HTMLTableCellElement> & {
   title?: string;
   /** Radix tooltip for full text (use with long labels). */
   tooltipContent?: string;
+  /** Align content */
+  align?: "left" | "center" | "right";
 };
 
 const densityPadding: Record<"default" | "compact", string> = {
-  default: "px-ui-3 py-ui-3 align-middle",
-  compact: "px-ui-2 py-ui-2 align-middle",
+  default: "px-table-cell-x py-table-cell-y",
+  compact: "px-ui-2 py-ui-2",
 };
 
 const overflowClass: Record<TableCellOverflow, string> = {
   truncate: "min-w-0 max-w-full truncate",
   wrap: "min-w-0 break-words [overflow-wrap:anywhere]",
-  numeric: "whitespace-nowrap tabular-nums",
+  numeric: "whitespace-nowrap tabular-nums slashed-zero",
+};
+
+const alignClass: Record<"left" | "center" | "right", string> = {
+  left: "text-left",
+  center: "text-center",
+  right: "text-right",
 };
 
 export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
@@ -38,6 +53,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
       tooltipContent,
       children,
       scope,
+      align = "left",
       ...props
     },
     ref
@@ -54,10 +70,25 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
         ref={ref}
         scope={as === "th" ? (scope ?? "col") : undefined}
         className={cn(
-          "text-ui-caption sm:text-ui-body",
+          "align-middle",
+          "text-ui-body-sm",
           densityPadding[density],
           overflowClass[overflow],
-          as === "th" && "text-left font-semibold text-text-primary",
+          alignClass[align],
+          
+          // Header cell styles
+          as === "th" && [
+            "font-medium text-ui-text-secondary",
+            "bg-ui-surface-subtle",
+            "border-b border-ui-border-muted",
+          ],
+          
+          // Data cell styles
+          as === "td" && [
+            "text-ui-text",
+            "border-b border-ui-border-muted",
+          ],
+          
           className
         )}
         title={overflow === "truncate" && !showTooltip ? title : undefined}
