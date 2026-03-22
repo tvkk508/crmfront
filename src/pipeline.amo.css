@@ -1,0 +1,196 @@
+/* ===========================================
+   Shell & Sidebar Styles (Global Layout)
+   =========================================== */
+.amo-shell {
+  display: flex;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  /* Semantic alias: same as `--color-bg` / `--ui-color-background` */
+  background: rgb(var(--ui-color-background));
+  color: rgb(var(--ui-color-text));
+}
+
+.amo-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--amo-sidebar-width);
+  height: 100vh;
+  background: var(--amo-sidebar-bg);
+  color: var(--amo-sidebar-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  z-index: 20;
+}
+
+.amo-sidebar__brand {
+  height: 36px;
+  width: 36px;
+  border-radius: 10px;
+  background: rgb(var(--primary-button-default));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-1);
+}
+
+.amo-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.amo-sidebar__item {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  border-radius: var(--medium-border-radius);
+  color: var(--amo-sidebar-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.amo-sidebar__item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.amo-sidebar__item.is-active {
+  color: #fff;
+  background: var(--amo-sidebar-active);
+}
+
+.amo-sidebar__icon {
+  height: 22px;
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+}
+
+.amo-sidebar__badge {
+  position: absolute;
+  top: 4px;
+  right: 12px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--amo-sidebar-badge);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--amo-sidebar-bg);
+}
+
+.amo-main {
+  margin-left: var(--amo-sidebar-width);
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.amo-main__content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* ===========================================
+   Scrollbar Utilities
+   =========================================== */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.4) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===========================================
+   Stagger Animation (for columns)
+   =========================================== */
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-in {
+  animation: stagger-fade-in 300ms ease-out forwards;
+  animation-delay: var(--animation-delay, 0ms);
+}
+
+/* ===========================================
+   Page Enter Animation
+   =========================================== */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-enter {
+  animation: page-enter 200ms ease-out;
+}
+
+/* ===========================================
+   Responsive Adjustments
+   =========================================== */
+@media (max-width: 640px) {
+  .amo-sidebar {
+    width: 60px;
+  }
+
+  .amo-main {
+    margin-left: 60px;
+  }
+}

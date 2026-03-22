@@ -1,0 +1,104 @@
+@import "./ui-tokens.css";
+@import "./pipeline.amo.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--ui-color-background));
+  color: rgb(var(--ui-color-text));
+  font-family: "PT Root UI", "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: var(--ui-font-body-size);
+  line-height: var(--ui-font-body-line);
+  font-weight: var(--ui-font-body-weight);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  filter: none;
+  color-scheme: light;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(var(--ui-color-accent));
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  Focus: use semantic ring tokens. :where() keeps specificity at 0 so any component
+  with `focus-visible:outline-none` / ring utilities wins — avoids double outlines
+  on kit controls (Radix + Tailwind ring).
+*/
+:where(
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  summary,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: var(--ui-focus-ring-width) solid rgb(var(--ui-color-focus-ring));
+  outline-offset: var(--ui-focus-ring-offset);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: var(--ui-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: fade-up 240ms ease-out;
+}
+
+.stagger-in {
+  animation: fade-up 280ms ease-out both;
+}

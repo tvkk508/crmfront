@@ -1,0 +1,75 @@
+/* ============================================
+   Drivebox Page - Minimal Styles
+   Most styles migrated to Tailwind in DriveboxPage.tsx
+   ============================================ */
+
+/* ============================================
+   Animations
+   ============================================ */
+
+/* Stagger animation for rows */
+@keyframes drivebox-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-in {
+  animation: drivebox-row-in 200ms ease-out both;
+}
+
+/* Skeleton shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============================================
+   Focus states for accessibility
+   ============================================ */
+.drivebox-row:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: -2px;
+}
+
+/* ============================================
+   Reduced motion support
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .stagger-in,
+  .animate-shimmer {
+    animation: none;
+  }
+}
+
+/* ============================================
+   High contrast mode support
+   ============================================ */
+@media (forced-colors: active) {
+  [aria-selected="true"] {
+    outline: 2px solid currentColor;
+  }
+}
+
+/* ============================================
+   Print styles
+   ============================================ */
+@media print {
+  .flex.flex-col.h-screen {
+    display: none;
+  }
+}
